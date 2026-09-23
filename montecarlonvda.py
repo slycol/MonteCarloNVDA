@@ -1,6 +1,3 @@
-
-#Monte Carlo Simulation of NVIDIA (NVDA) Stock Price
-
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -11,7 +8,7 @@ df = df.sort_values("Date").reset_index(drop=True)
 prices = df["Adj Close"].values
 dates = df["Date"].values
 
-S0 = prices[-1]  # most recent available price as our starting point
+S0 = prices[-1]
 last_date = pd.Timestamp(dates[-1])
 
 print(f"Loaded {len(df):,} trading days of NVDA data")
@@ -38,18 +35,17 @@ def annualize(mu_d, sigma_d):
 mu_full, sigma_full = annualize(mu_daily_full, sigma_daily_full)
 mu_recent, sigma_recent = annualize(mu_daily_recent, sigma_daily_recent)
 
-print("\n--- Parameters estimated from real data ---")
-print(f"Full history (1999-2026):  annual return ~{mu_full*100:,.1f}%,  annual volatility ~{sigma_full*100:,.1f}%")
-print(f"Last 2 years only:         annual return ~{mu_recent*100:,.1f}%,  annual volatility ~{sigma_recent*100:,.1f}%")
+print("\n--- parameters r estimated from real data ---")
+print(f"full history (1999-2026):  annual return ~{mu_full*100:,.1f}%,  annual volatility ~{sigma_full*100:,.1f}%")
+print(f"last 2 years only:         annual return ~{mu_recent*100:,.1f}%,  annual volatility ~{sigma_recent*100:,.1f}%")
 print("(NVDA's 27-year average is inflated by its early hyper-growth years,")
-print(" so the recent window is arguably a more realistic forward-looking estimate.")
+print(" so the recent window is probably a more realistic   estimate.")
 print(" Neither is a real forecast -- past returns don't guarantee future ones.)")
 
-# We'll simulate using the RECENT window as our working assumption
 mu = mu_recent
 sigma = sigma_recent
 
-T = 1.0                 # 1 year ahead
+T = 1.0               
 n_simulations = 10000
 dt = T / trading_days
 
